@@ -1,0 +1,26 @@
+//
+//= require jquery
+//= require jquery_ujs
+//= require bootstrap-sprockets
+//= require jquery.validate
+//= require jquery.validate.additional-methods
+//= require fancybox
+//= require awesome-share-buttons
+//= require_tree .
+
+$(document).ready(function() {
+  $("a.fancybox").fancybox({
+    helpers : {
+      title : {
+        type: 'inside'
+      }
+    }
+  });
+
+  // jQuery(function() {
+  //   var tz = jstz.determine();
+  //   $.cookie('timezone', tz.name(), { path: '/' });
+  //   console.log tz;
+  // });
+});
+

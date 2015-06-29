@@ -1,0 +1,451 @@
+/*
+ *= require_tree .
+ *= require font-awesome
+ *= require rails_bootstrap_forms
+ *= require fancybox
+ *= require awesome-share-buttons
+ *= require_self
+ */
+
+@import "bootstrap-sprockets"
+@import "bootstrap"
+
+$font-stack: 'Ubuntu', sans-serif
+$primary-color: #1C646E
+$light-blue: #8ccbcc
+$grey: #8A8A8A
+$dark-grey: #4C4C4C
+
+///////* General */////////
+html 
+  position: relative
+  min-height: 100%
+
+body
+  font-family: $font-stack
+  font-size: 18px
+  background-image: url('<%= asset_path "pattern2.png" %>')
+  margin-bottom: 104px
+  padding-bottom: 25px
+  color: $dark-grey
+h1
+  font-size: 3.2em
+  text-transform: uppercase
+  color: $dark-grey
+  font-family: 'Arbutus Slab', serif
+
+h2
+  color: $primary-color
+  text-transform: uppercase
+  font-size: 1.6em
+  font-weight: 700
+  margin-top: 0
+
+h3 
+  font-color: $primary-color
+  text-transform: uppercase
+  margin-top: 0
+  margin-bottom: 20px
+  font-weight: 700
+
+.cursive
+  font-family: 'Stalemate', cursive
+  letter-spacing: 1px
+a  
+  &:link, &:active, &:visited
+    color: $primary-color
+  &:hover
+    text-decoration: underline
+    // color: $light-blue
+    // opacity: .6
+p
+  line-height: 1.8em
+
+
+
+.btn
+  text-transform: uppercase
+
+.btn-default
+  &:hover, &:active, &:focus
+    opacity: 1
+
+.btn-primary
+  border-radius: 0
+  border: 2px solid $primary-color
+  background: $light-blue
+  color: $primary-color
+  &:hover, &:active, &:focus
+    border: 2px solid #fff
+    color: $primary-color
+    background: $light-blue
+    padding-bottom: 10px
+    text-decoration: none
+
+.container
+  padding-top: 25px
+  // padding-bottom: 10px   
+  
+.cant-see-me
+  display: none
+
+///////* Header */////////
+
+header
+  text-align: center
+  // background: #fff
+  padding: 80px 0 70px
+  width: 100%
+  background: url('<%= asset_path "bg.jpeg" %>') no-repeat center center
+  background-size: cover
+  color: #fff
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.6)
+  h1
+    margin-bottom: 10px
+    margin-top: 0 
+    color: #fff
+    // a, a:active, a:link, a:hover, a:visited
+    //   color: #fff 
+  p
+    font-size: 24px
+    color: #fff
+    font-weight: 300
+    padding: 0 20px
+
+
+.fa-twitter, .fa-facebook
+  font-size: 20px
+
+///////* Navbar */////////
+
+.navbar
+  margin-bottom: 0
+  border-bottom: 2px solid $primary-color
+  // border-top: 2px solid $primary-color
+  padding-bottom: 17px
+  padding-top: 17px
+  font-weight: 700
+  border-radius: 0
+  text-transform: uppercase
+  background-image: url('<%= asset_path "pattern1.png" %>')
+
+.navbar-default .navbar-nav > li > a
+  color: $primary-color
+  font-size: 16px
+  display: inline
+  &:hover, &:focus
+    color: $primary-color
+    background: none
+    opacity: .6
+    border-bottom: none
+
+.navbar-nav > li
+  padding: 0 50px
+
+.navbar .nav
+  width: 100%
+  text-align: center
+  > li
+    float: none
+    text-align: center
+    display: inline
+
+
+///////* Footer */////////
+
+footer 
+  margin-bottom: 0
+  border-top: 2px solid $primary-color
+  text-transform: uppercase
+  padding: 40px 0
+  position: absolute
+  bottom: 0
+  width: 100%
+  height: 104px
+  background: url('<%= asset_path "footer-bg.jpg" %>') no-repeat bottom center
+  background-size: cover
+  color: #fff
+  font-weight: 100
+
+///////* Maps */////////
+
+#info-window
+  //width: 500px 
+  //width: 420px
+  h2 
+    margin-bottom: 0
+  h4
+    color: #666
+    text-transform: uppercase
+    font-size: 11px
+    letter-spacing: 1px
+    margin: 5px 0 18px
+  img 
+    margin-top: 5px
+  a 
+    color: $primary-color
+    text-transform: uppercase
+    font-size: 1em
+    font-weight: 700
+    margin-top: 18px
+  a:hover
+    background: $light-blue
+    color: #fff
+    padding-bottom: 6px
+
+#map-canvas
+  width: 100%
+  height: 200px
+  // margin-bottom: 20px
+
+#map-all
+  width: 100%
+  height: 515px
+  margin-bottom: 20px
+  // border: 2px solid #0080AF
+
+///////* Homepage */////////
+#insta 
+  background: white
+
+#blog-index
+  a:hover
+    text-decoration: none
+  .well
+    background-color: $light-blue
+    border: 2px solid #1C8294
+    border-radius: 0
+    h2
+      margin-top: 20px
+    p
+      letter-spacing: 2px
+      color: #1c8394
+      margin-bottom: 25px
+    h3
+      color: #fff
+      text-transform: uppercase
+      font-size: 12px
+      letter-spacing: 1px
+      margin-top: 0
+    h4
+      color: #fff
+      font-size: 12px
+      text-transform: uppercase
+      font-weight: 700
+      letter-spacing: 1px
+      margin-top: 0
+      margin-bottom: 0
+    &:hover
+      border: 2px solid #fff
+      text-decoration: none
+
+///////* Blog Post Show */////////
+
+#blog-post-show
+  background: #fff
+  margin-top: 25px
+  padding-top: 20px
+  color: $dark-grey
+  .col-sm-8
+    padding: 10px 25px 20px
+  .col-sm-4
+    padding: 0 25px 20px
+  .img-responsive
+    margin-bottom: 10px
+  h2
+    margin-top: 20px
+  h3
+    text-transform: uppercase
+    font-size: 12px
+    letter-spacing: 1px
+    margin: 18px 0
+  h4
+    font-weight: bold
+    font-size: 14px
+    color: #999
+    margin-top: 0
+  h3.byline
+    border: 1px solid #ccc
+    padding: 10px
+    margin: 0 0 25px!important
+    display: inline-block
+    img
+      margin: -10px 8px -10px -10px
+  #share-buttons
+    margin-top: 20px
+    .cursive
+      font-size: 30px
+  #blog-content
+    a
+      &:link, &:active, &:visited
+        color: $dark-grey
+        text-decoration: none
+        border-bottom: 1px solid $light-blue
+        padding-bottom: 5px
+        -webkit-transition-property: color
+        -moz-transition-property: color
+        -o-transition-property: color
+        transition-property: color
+        -webkit-transition-duration: 0.5s
+        -moz-transition-duration: 0.5s
+        -o-transition-duration: 0.5s
+        transition-duration: 0.5s
+        -webkit-transition-timing-function: linear
+        -moz-transition-timing-function: linear
+        -o-transition-timing-function: linear
+        transition-timing-function: linear
+      &:hover
+        text-decoration: none
+        color: $light-blue
+        opacity: 1
+    p
+      margin-bottom: 25px
+    .row
+      border-top: 1px solid #eee
+      margin: 0
+      padding-top: 20px
+      .col-xs-6
+        a 
+          font-size: 0.9em
+          color: $primary-color
+          text-transform: uppercase
+          border-bottom: none
+        a:hover
+          opacity: 0.6
+      .col-xs-6:last-child
+        text-align: right
+
+#comments-form
+  background: rgba(255,255,255,0.5)
+  margin-top: 20px
+  padding: 25px
+  h3
+    // text-transform: uppercase
+    // font-size: 12px
+    // letter-spacing: 1px
+    margin: 0 0 10px
+    // color: #666
+  textarea
+    border-radius: 0
+    border: 0
+    padding: 12px
+    font-size: 1em
+  .actions
+    margin-bottom: 20px // for small view
+  p 
+    margin: 0
+  .btn-primary
+    background: #fff
+    &:hover
+      border: 2px solid $primary-color
+      background: $light-blue
+
+#comments-list
+  background: #fff
+  margin-top: 20px
+  padding-bottom: 20px
+
+#comments-show
+  // background: #fff
+  // padding: 20px
+  h2
+    margin:  0
+    text-transform: capitalize
+  h3
+    text-transform: uppercase
+    font-size: 12px
+    letter-spacing: 1px
+    margin: 18px 0
+    color: #666
+  h4
+    font-weight: bold
+    font-size: 14px
+    color: #999
+    margin-top: 0
+  img 
+    // border-radius: 100px
+  hr:last-child
+    display: none
+
+
+///////* Forms */////////
+
+input[type="file"]
+  border-radius: 0
+
+.input-group 
+  .form-control
+    border-left: none
+    font-size: 1em
+    border: 2px solid $primary-color
+    border-left: none
+    border-radius: 0
+    box-shadow: none
+    background: #efefef
+    &:focus
+      border: 2px solid $primary-color
+      border-radius: 0
+      border-left: none
+      background: #fff
+  .input-group-addon
+    border-radius: 0
+    color: $primary-color
+    border: 2px solid $primary-color
+    border-right: none
+
+
+///////* Errors */////////
+
+.alert 
+  border-radius: 0
+  margin-bottom: 0
+
+#error_explanation 
+  width: 400px
+  border: 2px solid red
+  padding: 7px
+  padding-bottom: 12px
+  margin-bottom: 20px
+  background-color: #f0f0f0
+  h2 
+    text-align: left
+    font-weight: bold
+    padding: 5px 5px 5px 15px
+    font-size: 12px
+    //margin: -7px
+    color: #c00
+  p 
+    margin-bottom: 0
+    padding: 5px
+  ul li 
+    list-style: square
+
+///////////* Fancy Box */////////////
+
+.fancybox-close:hover, .fancybox-next:hover, .fancybox-prev:hover
+  border-bottom: none
+
+///////////* Media Queries */////////////
+
+// Small devices (tablets, 768px and up) */
+@media (max-width: 480px)
+  #map-all
+    //display: none
+    // height: 300px
+@media (max-width: 667px)
+  #map-all
+    //display: none
+    height: 300px
+  #map-canvas
+    height: 150px
+  .navbar-nav > li
+    padding: 0
+  header
+    padding: 10px 0
+    h1
+      font-size: 2.2em
+      margin-top: 15px
+    p
+      font-size: 1em
+      line-height: 1.6em
+

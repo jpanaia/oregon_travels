@@ -1,0 +1,35 @@
+<% title "Oregon Trail: All Users" %>
+
+<div class="container">
+<table class="table">
+  <tr>
+    <th>Username</th>
+	  <th>Email</th>
+	  <% #if can? :update, @blog_post %>
+	    <th>Admin</th>
+      <!-- <th></th>
+      <th></th> -->
+    <%# end %>
+  </tr>
+  
+	<% @users.each do |user| %>
+	  <tr>
+	    <td><%= user.username %></td>
+	     <td><%= user.email %></td>
+	     <%# if can? :update, @blog_post %>
+		 <td><%= user.admin %></td> 
+		     <!-- <td> -->
+		   	   <%#= link_to edit_user_registration_path(id: user.id), class: "btn btn-default" do %>
+	          <!-- <span class="glyphicon glyphicon-pencil"></span>  -->
+	         <%# end %>            
+	      <!-- </td>
+		    <td> --> 
+		    <%#= link_to user_registration_path, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default" do %>
+	        <!-- <span class="glyphicon glyphicon-trash"></span>  -->
+	       <%# end %>
+	      <!-- </td> -->
+	    <%# end %>
+	  </tr>
+	<% end %>
+</table>
+</div>

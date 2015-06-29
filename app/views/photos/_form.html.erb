@@ -1,0 +1,36 @@
+<a class="btn btn-default" data-toggle="collapse" href="#collapsePhotoForm" aria-expanded="false" aria-controls="collapsePhotoForm">Add a photo</a>
+
+  <div class="collapse" id="collapsePhotoForm">
+    <div class="well">
+
+      <%= form_for(@photo) do |f| %>
+        <% if @photo.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@photo.errors.count, "error") %> prohibited this photo from being saved:</h2>
+
+            <ul>
+            <% @photo.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <!-- <div class="form-group">
+          <%#= f.text_field :title, placeholder: "title", class: "form-control", required: "required" %>
+        </div> -->
+        <div class="form-group">
+          <%= f.text_field :caption, placeholder: "Caption", class: "form-control", required: "required" %>
+        </div>
+        <div class="form-group">
+         <%= f.file_field :photo, required: "required" %>
+        </div>
+
+        <div class="cant-see-me">
+          <%= f.number_field :blog_post_id, value: @blog_post.id %>
+        </div>
+
+          <%= f.submit "Do it", class: "btn-info btn" %>
+      </div>
+    <% end %>
+</div>

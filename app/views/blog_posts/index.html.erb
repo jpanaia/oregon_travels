@@ -1,0 +1,126 @@
+<div id="map-all"></div>
+
+<div class="container">
+  <% @blog_posts.each_slice(3) do |blog_post| %>
+    <div class="row">
+      <% blog_post.each do |blog_post| %>
+        <div class="col-md-4" id="blog-index">
+          <%= link_to blog_post do %>
+            <div class="well">
+              <% if can? :update, blog_post %>
+                <p class="pull-right">        
+                  <%= link_to blog_post, class: "btn btn-default" do %>
+                  <span class="glyphicon glyphicon-eye-open"></span> 
+                  <% end %> 
+                  <%= link_to edit_blog_post_path(blog_post), class: "btn btn-default" do %>
+                  <span class="glyphicon glyphicon-pencil"></span> 
+                  <% end %> 
+                  <%= link_to blog_post, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default" do %>
+                  <span class="glyphicon glyphicon-trash"></span> 
+                 <% end %>
+               </p>
+              <% end %>
+              <h3><%= blog_post.address %></h3>
+              <h2><%= blog_post.title %></h2>
+              <p><%= blog_post.blog_entry[0..100].html_safe %>...</p>
+              <h4><%= time_ago_in_words(blog_post.created_at) %> ago</h4>
+            </div>
+          <% end %> <!-- end of giant link tag -->
+        </div> <!-- end of column -->  
+      <% end %>
+    </div>  <!-- end of row -->
+  <% end %>
+</div>
+
+<div class="container">
+  <div class="row">
+    <% @photo_hash.each do |photo, title| %>
+      <div class="col-sm-2">
+        <a class="fancybox" rel="gallery1" title='<%= title %>' href="<%= photo %>"><img src ='<%= photo %>' class="img-responsive"></a><br/>
+      </div>
+    <% end %>
+   </div>
+</div>
+</div>
+
+<%= javascript_tag do %>    
+  sites= <%=raw @latlongarray %>; 
+<% end %>
+
+<script>
+function initialize() {
+  var mapOptions = {
+    zoom: 15,
+    scrollwheel: false,   
+    center: new google.maps.LatLng(42.35804, -71.057329),
+    draggable: false
+  }
+
+    var map = new google.maps.Map(document.getElementById('map-all'), mapOptions);
+    var bounds = new google.maps.LatLngBounds();
+    var infowindow = new google.maps.InfoWindow();
+    
+    for(var i in sites)
+    {
+      var p = sites[i];
+      var latlng = new google.maps.LatLng(p[1], p[2]);
+
+      bounds.extend(latlng);
+
+      var image = '<%= asset_path "portlandia2.png" %>'
+      var marker = new google.maps.Marker ({
+        position: latlng,
+        map: map,
+        title: p[0],
+        bp: p[3],
+        photo: p[4],
+        f_id: p[5],
+        bp_title: p[6],
+        icon: image,
+        animation: google.maps.Animation.DROP
+      });
+
+      google.maps.event.addListener(marker, 'click', function() {
+        infowindow.setContent('<div class="row" id="info-window">' + '<div class="col-xs-4">' + '<img src="' + this.photo + '", class="img-responsive">' + '</div>' + '<div class="col-xs-8">' +  '<h4>' + this.title + '</h4>' + '<h2>' + this.bp_title + '</h2>' + '<a href="blog_posts/' + this.f_id + '", class="btn btn-primary">Read Full Post</a>' + '</div>' + '</div>' );
+        infowindow.open(map,this);
+      });
+
+
+
+      // '<div class="row" id="info-window">' + '<div class="col-xs-4">' + '<img src="' + this.photo + '", class="img-responsive">' + '</div>' + '<div class="col-xs-8">' + '<h4>' + this.title + '</h4>' + '<h2>' + this.bp_title + '</h2>' + '<p>' + this.bp + '</p>' + '<p><a href="/blog_posts/' + this.bp_id + ', class="btn btn-primary">' + "Read Full Post" + "</a></p>" + '<p></p>' + '</div>' + '</div>'
+    
+    map.fitBounds(bounds);
+
+    var lineSymbol = {
+      path: 'M 0,-1 0,1',
+      scale: 4,
+      strokeOpacity: 1,
+      strokeColor: '#393'
+    };
+
+    var lineCoordinates = [];
+
+    for(var x in sites)
+    {
+      n = sites[x];
+      lineCoordinates.push(new google.maps.LatLng(n[1], n[2]));          
+    }
+
+    var linePath;
+      createPolyline(map, lineCoordinates, lineSymbol);
+    }
+
+    function createPolyline(map,lineCoordinates,lineSymbol){
+      linePath = new google.maps.Polyline({
+        path: lineCoordinates,
+        geodesic: true,
+        strokeColor: '#006289',
+        strokeOpacity: 1.0,
+        strokeWeight: 2
+       });
+     linePath.setMap(map);
+    } 
+  } // end loop
+  google.maps.event.addDomListener(window, 'load', initialize);
+
+</script>

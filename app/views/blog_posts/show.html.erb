@@ -1,0 +1,163 @@
+<% title "#{@blog_post.title}" %>
+
+<div id="map-canvas"></div>
+
+<div class="container" id="blog-post-show">
+  <div class="row">
+		<div class="col-sm-8" >
+			<p class="pull-right">
+				<% if can? :update, @blog_post %>
+					<%= link_to edit_blog_post_path(@blog_post), class: "btn btn-default" do %>
+			       <span class="glyphicon glyphicon-pencil"></span>  
+			    <% end %>
+			      <%= render 'photos/form' %>
+				<% end %>
+			</p>
+			<h4><%= @blog_post.address %></h4>
+		  <h2><%= @blog_post.title %></h2>
+			<h3><%= @post_date %> &nbsp; &nbsp;<%= @post_time %></h3>
+			<div class="row">
+				<div class="col-md-12">
+					<h3 class="byline">
+				  <%= image_tag @blog_post.user.avatar.url(:thumb) if @blog_post.user.avatar.exists? %><%= @blog_post.user.username %>
+
+			    </h3>
+					
+				  <% if @blog_post.photos.exists? %>   
+						<%= awesome_share_buttons(@blog_post.title, :url => "https://oregontrail.herokuapp.com/blog_posts/#{@blog_post.friendly_id}", :image => @first_photo.photo.url) %>
+					 <% else %>
+							<%= awesome_share_buttons(@blog_post.title, :url => "https://oregontrail.herokuapp.com/blog_posts/#{@blog_post.friendly_id}") %>
+					 </p> 
+					 <% end %>
+			</div>
+		   </div>
+		  <div id="blog-content">
+		  	<%= @blog_post.blog_entry.html_safe %>
+		  	<div class="row">
+			    <div class="col-xs-6">
+					  <% if @blog_post.id != @blog_posts.first.id %>
+					    <%= link_to blog_post_path(id: @blog_post.prev) do %>
+					      <span class="fa fa-hand-o-left"></span> <%=@blog_post.prev.title %> 
+					    <% end %>
+					  <% end %>
+			    </div>
+			    <div class="col-xs-6">
+					  <% if @blog_post.id != @blog_posts.last.id %>
+						  <%= link_to blog_post_path(id: @blog_post.next) do %>
+						    <%=@blog_post.next.title %> <span class="fa fa-hand-o-right"></span> 
+						  <% end %>	
+						<% end %>
+					</div>
+				</div>
+		  </div>
+		</div>
+		<div class="col-sm-4"> 
+
+		  <% if @blog_post.photos.exists? %>
+   
+<!-- 		    <h3>Photos from <%#=@blog_post.address %></h3>
+ --> 		           
+ 				
+         <% @blog_post.photos.each do |photo| %>
+			    	<div class="col-sm-9 col-sm-offset-2">
+				      <a href= "<%=photo.photo.url%>" class="fancybox" rel ="gallery1", title= "<%=photo.caption%>">
+				      <%= image_tag photo.photo.url(:medium), alt: photo.title, title: photo.caption, class: "img-responsive" %>
+				      </a>
+				      <% if can? :update, @blog_post %>
+				        <%= link_to photo, method: :delete, data: { confirm: 'Are you sure?' } do %>
+				         <span class="glyphicon glyphicon-trash"></span> 
+				        <% end %>
+				      <% end %>
+				    </div>
+				  <% end %>
+		    <% end %>
+	  </div>
+	</div>
+</div>
+
+<div class="container" id="comments-form">
+	<div class="row">
+		<div class="col-md-12">
+			<% if user_signed_in? %>
+			  <h3>Talk to us <%= current_user.username %></h3>
+			  <%= render 'comments/form' %>
+			<% else %>
+			  <p><%= link_to "Sign in to leave a comment", new_user_session_path, class: "btn btn-primary btn-lg" %></p>
+			<% end %>
+		</div>
+	</div>
+</div>
+<div class="container" id="comments-list">
+	<div class="row">
+		<div class="col-md-12">
+			<% if @blog_post.comments.count > 0 %>
+				<h3><%= @blog_post.comments.count %> Comments</h3>
+				<div id="comments-show">
+					<% @blog_post.comments.order(created_at: :desc).each do |comment| %>
+					  <div class="row">
+							<div class="col-xs-2">
+								<%= image_tag comment.user.avatar.url(:thumb), class: "img-responsive" %>
+							</div>
+							<div class="col-xs-10">
+								<% if (user_signed_in? && current_user.id == comment.user.id) || (can? :update, @blog_post) %>
+								    <p class="pull-right">
+								  	  <%= link_to comment, method: :delete, data: { confirm: 'Are you sure you want to delete your comment?' }, class: "btn btn-default" do %>
+			                  <span class="glyphicon glyphicon-trash"></span> 
+			                <% end %>
+			              </p>
+							  <% end %>
+							  <h2><%= comment.user.username %></h2>
+							  <h3><%= comment.created_at.strftime('%B %e, %Y') %> &nbsp; &nbsp;<%= comment.created_at.strftime('%-I:%M%P %Z') %></h3>   
+							  <p><%= comment.comment_entry %></p>
+							</div>
+						</div>
+						<hr/>
+					<% end %>
+				</div>
+			<% else %>
+				<h3>No Comments</h3>
+				<div id="comments-show">
+					<p>No comments yet. Be the first!</p>
+				</div>
+			<% end %>
+
+		
+		</div>
+	</div>
+</div>
+<%= javascript_tag do %>
+   latitude = '<%= j @blog_post.latitude.to_s %>';
+   longitude = '<%= j @blog_post.longitude.to_s %>';
+   address = '<%= j @blog_post.address %>';
+   blog_entry = '<%= j @blog_post.blog_entry %>';
+<% end %>
+
+<script>
+
+function initialize() {
+    var myLatlng = new google.maps.LatLng(latitude,longitude);
+
+    var mapOptions = {
+      zoom: 10,
+      scrollwheel: false,   
+      center: myLatlng,
+      panControl: false,
+      zoomControl: false,
+      draggable: false
+    }
+
+    var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+    var image = '<%= asset_path "portlandia2.png" %>'
+    
+    var marker = new google.maps.Marker({
+      position: myLatlng,
+      map: map,
+      title: address,
+      icon: image,
+      animation: google.maps.Animation.DROP
+    });
+
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+</script>
