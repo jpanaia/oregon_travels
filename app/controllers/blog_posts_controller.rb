@@ -7,8 +7,8 @@ class BlogPostsController < ApplicationController
   def index
     @blog_posts = BlogPost.order(posted_at: :desc)
     @latlongarray = BlogPost.order(posted_at: :desc).all.collect {|blog_post| [blog_post.address, blog_post.latitude, blog_post.longitude, blog_post.blog_entry[0..50], blog_post.photo.url(:small), blog_post.friendly_id, blog_post.title]}
-    response = HTTParty.get("https://api.instagram.com/v1/tags/oregontrailgirls/media/recent?access_token=2682.bb484d1.e90b2e38118a40fcaa13186b24649df2")
-    response2 = HTTParty.get("https://api.instagram.com/v1/tags/oregontrailgirls?access_token=2682.bb484d1.e90b2e38118a40fcaa13186b24649df2")
+    response = HTTParty.get("https://api.instagram.com/v1/tags/oregontravelgirls/media/recent?access_token=2682.bb484d1.e90b2e38118a40fcaa13186b24649df2")
+    response2 = HTTParty.get("https://api.instagram.com/v1/tags/oregontravelgirls?access_token=2682.bb484d1.e90b2e38118a40fcaa13186b24649df2")
     @count = response2["data"]["media_count"]
     # @link = response["data"][i]["link"]
 

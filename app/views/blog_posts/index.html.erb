@@ -91,35 +91,36 @@ function initialize() {
     
     map.fitBounds(bounds);
 
-    var lineSymbol = {
-      path: 'M 0,-1 0,1',
-      scale: 4,
-      strokeOpacity: 1,
-      strokeColor: '#393'
-    };
+    // var lineSymbol = {
+    //   path: 'M 0,-1 0,1',
+    //   scale: 4,
+    //   strokeOpacity: 1,
+    //   strokeColor: '#393'
+    // };
 
-    var lineCoordinates = [];
+    // var lineCoordinates = [];
 
-    for(var x in sites)
-    {
-      n = sites[x];
-      lineCoordinates.push(new google.maps.LatLng(n[1], n[2]));          
-    }
+    // for(var x in sites)
+    // {
+    //   n = sites[x];
+    //   lineCoordinates.push(new google.maps.LatLng(n[1], n[2]));          
+    // }
 
-    var linePath;
-      createPolyline(map, lineCoordinates, lineSymbol);
-    }
+    // var linePath;
+    //   createPolyline(map, lineCoordinates, lineSymbol);
+    // 
+  }
 
-    function createPolyline(map,lineCoordinates,lineSymbol){
-      linePath = new google.maps.Polyline({
-        path: lineCoordinates,
-        geodesic: true,
-        strokeColor: '#006289',
-        strokeOpacity: 1.0,
-        strokeWeight: 2
-       });
-     linePath.setMap(map);
-    } 
+    // function createPolyline(map,lineCoordinates,lineSymbol){
+    //   linePath = new google.maps.Polyline({
+    //     path: lineCoordinates,
+    //     geodesic: true,
+    //     strokeColor: '#006289',
+    //     strokeOpacity: 1.0,
+    //     strokeWeight: 2
+    //    });
+    //  linePath.setMap(map);
+    // } 
   } // end loop
   google.maps.event.addDomListener(window, 'load', initialize);
 
